@@ -1,6 +1,6 @@
 # myblog
 
-> xcq personal blog made buy vue element nodejs express  mongodb 
+> xcq personal blog made by vue element nodejs express  mongodb 
 
 ## Build Setup
 
