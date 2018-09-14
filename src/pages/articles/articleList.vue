@@ -24,17 +24,26 @@
 		          </el-button>
 			</div>
 			
+			<p class="delAll" v-show="ids">
+				<el-button
+		          size="mini"
+		          type="danger"
+		          @click="delMore">
+		          	删除多项
+		          </el-button>
+			</p>
 			<!--表格-->
 	  		<el-table
 		    ref="multipleTable"
 		    :data="tableData"
 		    tooltip-effect="dark"
-		    style="width: 96%;margin: 36px auto;text-align: center;min-width: 1000px;"
+		    style="width: 96%;margin: 10px  auto 36px auto;text-align: center;min-width: 1000px;"
 		    border
 		    stripe
 		    show-overflow-tooltip
 		    v-loading='loading'
-		    @selection-change="handleSelectionChange">
+		    @selection-change="handleSelectionChange"
+		    >
 		    <el-table-column
 		      type="selection"
 		      width="55">
@@ -64,20 +73,21 @@
 		    <el-table-column
 		      prop="ctime"
 		      label="发布时间"
+		      width='150'
 		      >
 		    </el-table-column>
 		    
 		    <el-table-column
 		      prop="discuss"
 		      label="评论"
-		      width='120'
+		      width='55'
 		      >
 		    </el-table-column>
 		    
 		    <el-table-column
 		      prop="help"
 		      label="赞赏"
-		      width='120'
+		      width='55'
 		      >
 		    </el-table-column>
 		    
@@ -118,6 +128,7 @@
 				loading:true,
 				v1:'全部',
 				v2:'',
+				ids:'',
 				options: [{
 		          value: '全部',
 		          label: '全部'
@@ -153,6 +164,7 @@
 		},
 		methods:{
 			getData(params){
+				this.loading = true
 				this.$axios.get('api/admin/list.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.loading = false
@@ -175,14 +187,54 @@
 				}
 				this.getData(params)
 			},
-			handleSelectionChange(val){
-				
-			},
+			
 			handleEdit(index,item){
 				this.$router.push({path:'/edit_article',query:{id:item._id}})
 			},
+			handleSelectionChange(val){
+				let arr = []
+				for(let v of val){
+					arr.push(v._id)
+				}
+				this.ids = arr.join(',')
+			},
+			
+			delMore(){
+				let params = {
+					ids:this.ids
+				}
+				this.delete(params)
+			},
+			delete(params){
+				this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+		          confirmButtonText: '确定',
+		          cancelButtonText: '取消',
+		          type: 'warning'
+		        }).then(() => {
+		          
+					this.$axios.post('api/admin/delete.html',params).then( (res) => {
+						if(res.status==200){
+							this.$notify({
+					          message: '文章删除成功!',
+					          type: 'success'
+					        })
+							this.search()
+						}
+					})
+		        }).catch(() => {
+		          this.$message({
+		            type: 'info',
+		            message: '已取消删除'
+		          });          
+		        });
+			},
 			handleDelete(index,item){
 				
+				let params = {
+		          	ids:item._id
+		          }
+				
+				this.delete(params)
 			},
 			handleCurrentChange(val){
 				this.loading = true
@@ -203,6 +255,10 @@
 		.search{
 			width: 96%;
 			margin: 20px auto;
+		}
+		.delAll{
+			width: 96%;
+			margin: auto;
 		}
 	}
 </style>

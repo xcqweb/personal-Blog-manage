@@ -16,22 +16,23 @@
 		
 		<quill-editor
 			class='edit'
-			:content="content"
+			v-model="content"
             :options="editorOption"
-            @change="onEditorChange($event)">
+            >
   		</quill-editor>
+  		
+  		<el-button type="primary" style='margin-top: 20px;width: 100%;' @click='save'>保存</el-button>
 	</div>
 </template>
 
 <script>
+	import {debounce} from 'lodash'
 	export default{
 		name:'tempEditArticle',
 		data(){
 			return{
-				content: '<h2>I am Example</h2>',
-		        editorOption: {
-		        	
-		        },
+				content: '',
+		        editorOption: {},
 		        v1:'全部',
 				v2:'',
 				v3:'chase',
@@ -63,9 +64,33 @@
 			}
 		},
 		methods:{
-			onEditorChange(){
-				
-			}
+			save : debounce(function(){
+				let params = {
+					title : this.v2,
+					imgUrl : '',
+					author : 'chase',
+					content : this.content,
+					classify : this.v1,
+					type:1
+				}
+				this.loading = true
+				this.$axios.post('api/admin/saveTem.html',params).then( (res) => {
+					if(res.data.status==200){
+						this.loading = false
+						this.$notify({
+				          message: '恭喜你，文章保存成功!',
+				          type: 'success'
+				        })
+						this.v1 = ''
+						this.v2 = ''
+						this.content = ''
+						this.$router.push('/edit_article_list')
+						
+					}
+				}).catch( () => {
+					this.loading = false
+				})
+			},1000)
 				
 		}
 	}

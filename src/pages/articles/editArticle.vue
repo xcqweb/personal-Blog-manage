@@ -1,5 +1,5 @@
 <template>
-	<div class="addArticle">
+	<div class="addArticle" v-loading='loading'>
 		
 		<span style="font-size: 14px;margin-right: 10px;">类别 :</span>
 		<el-select v-model="v1" filterable placeholder="请选择" size='mini'>
@@ -16,7 +16,7 @@
 		
 		<quill-editor
 			class='edit'
-			:content="content"
+			v-model="content"
             :options="editorOption"
             >
   		</quill-editor>
@@ -31,10 +31,9 @@
 		name:'addArticle',
 		data(){
 			return{
-				content: '<h2>I am Example</h2>',
-		        editorOption: {
-		        	
-		        },
+				loading:true,
+				content: '',
+		        editorOption: {},
 		        v1:'全部',
 				v2:'',
 				v3:'chase',
@@ -70,13 +69,20 @@
 			
 			if(!this.$route.query.id)return
 			let params = {
-				id:this.$route.query.id
+				id:this.$route.query.id,
+				type:1
 			}
-			this.$axios.get('api/admin/vedit.html',{params:params}).then( (res) => {
-				this.v1 = res.data.classify
-				this.v2 = res.data.title
-				this.content = res.data.content
-				this.reData = res.data
+			this.loading = true
+			let url = this.$route.query.tem?'api/admin/temedit.html':'api/admin/vedit.html'
+			this.$axios.get(url,{params:params}).then( (res) => {
+				if(res.status==200){
+					this.loading = false
+					this.v1 = res.data.classify
+					this.v2 = res.data.title
+					this.content = res.data.content
+					this.reData = res.data
+				}
+				
 			})
 		},
 		
@@ -91,15 +97,22 @@
 					id : this.$route.query.id,
 					type:1
 				}
-				
-				this.$axios.post('api/admin/save_edit.html',params).then( (res) => {
+				this.loading = true
+				let url = this.$route.query.tem?'api/admin/temsave_edit.html':'api/admin/save_edit.html'
+				this.$axios.post(url,params).then( (res) => {
 					if(res.data.status==200){
+						this.loading = false
 						this.$notify({
 				          message: '恭喜你，文章保存成功!',
 				          type: 'success'
 				        })
 						this.$store.dispatch('delSingleTag','/edit_article').then( () => {
-							this.$router.push('/article_list')
+							if(this.$route.query.tem){
+								this.$router.push('/edit_article_list')
+							}else{
+								this.$router.push('/article_list')
+							}
+							
 						})
 						
 					}

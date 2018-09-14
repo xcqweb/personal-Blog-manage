@@ -17,7 +17,7 @@
 	padding-bottom: 42px;
 	box-sizing: border-box;
     margin: 10px;
-    height: calc(100vh - 100px);
+    height: 78vh;
     overflow: auto;
 }
 </style>

@@ -9,7 +9,6 @@ import 'babel-polyfill'
 import Element,{ Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
-
 import QuillEditor from 'vue-quill-editor'
 
 // require styles

@@ -100,7 +100,7 @@
 	    },
 	    watch:{
 	    	$route:function(newVal,oldVal){
-	    		this.$store.dispatch('addTag',{path:newVal.path,title:newVal.meta.title,id:newVal.query.id})
+	    		this.$store.dispatch('addTag',{path:newVal.path,title:newVal.meta.title,id:newVal.query.id,tem:newVal.query.tem})
 	    	}
 	    },
 	}

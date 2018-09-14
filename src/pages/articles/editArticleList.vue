@@ -20,7 +20,7 @@
 		          type='primary'
 		          icon="el-icon-search"
 		          @click="search">
-		                         搜索
+		                 搜索
 		          </el-button>
 			</div>
 			
@@ -34,7 +34,7 @@
 		    stripe
 		    show-overflow-tooltip
 		    v-loading='loading'
-		    @selection-change="handleSelectionChange">
+		    >
 		    <el-table-column
 		      type="selection"
 		      width="55">
@@ -64,20 +64,21 @@
 		    <el-table-column
 		      prop="ctime"
 		      label="发布时间"
+		      width='150'
 		      >
 		    </el-table-column>
 		    
 		    <el-table-column
 		      prop="discuss"
 		      label="评论"
-		      width='120'
+		      width='55'
 		      >
 		    </el-table-column>
 		    
 		    <el-table-column
 		      prop="help"
 		      label="赞赏"
-		      width='120'
+		      width='55'
 		      >
 		    </el-table-column>
 		    
@@ -153,6 +154,7 @@
 		},
 		methods:{
 			getData(params){
+				this.loading = true
 				this.$axios.get('api/admin/temlist.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.loading = false
@@ -175,11 +177,9 @@
 				}
 				this.getData(params)
 			},
-			handleSelectionChange(val){
-				
-			},
+			
 			handleEdit(index,item){
-				console.log(index,item)
+				this.$router.push({path:'/edit_article',query:{id:item._id,tem:true}})
 			},
 			handleDelete(index,item){
 				
@@ -202,7 +202,7 @@
 	.articleList{
 		box-sizing: border-box;
 		margin: 10px;
-		height: calc(100vh - 100px);
+		height: 78vh;
 		overflow: auto;
 		.search{
 			width: 96%;

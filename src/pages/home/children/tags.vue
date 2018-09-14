@@ -9,7 +9,7 @@
 		  :disable-transitions="false"
 		  @close="handleClose(tag,index)"
 		>
-  		<router-link :to='{path:tag.path,query:{id:tag.id}}' tag='span'>{{tag.title}}</router-link>
+  		<router-link :to='{path:tag.path,query:{id:tag.id,tem:tag.tem}}' tag='span'>{{tag.title}}</router-link>
 </el-tag>
 	</div>
 </template>
@@ -23,7 +23,7 @@
 			}
 		},
 		created(){
-			this.$store.dispatch('addTag',{path:this.$route.path,title:this.$route.meta.title})
+			this.$store.dispatch('addTag',{path:this.$route.path,title:this.$route.query.tem?'临时编辑文章':this.$route.meta.title})
 		},
 		methods:{
 			handleClose(val,index){
