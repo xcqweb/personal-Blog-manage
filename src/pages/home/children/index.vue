@@ -1,14 +1,24 @@
 <template>
-	<div class="index">
-		index
-	</div>
+  <div class="index">
+
+  </div>
 </template>
 
 <script>
-	export default{
-		name:'index'
-	}
+export default {
+  name: 'index',
+  data() {
+    return {
+    }
+  },
+  computed: {
+  },
+  created() {
+  }
+}
 </script>
-
-<style>
+<style  lang="less" scoped="scoped">
+  .index{
+    
+  }
 </style>

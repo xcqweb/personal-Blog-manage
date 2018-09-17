@@ -21,7 +21,7 @@
             >
   		</quill-editor>
   		
-  		<el-button type="primary" style='margin-top: 20px;width: 100%;' @click='save'>发布</el-button>
+  		<el-button type="primary" style='margin: -60px auto;width: 86%;position: absolute;' @click='save'>发布</el-button>
 	</div>
 </template>
 
@@ -85,7 +85,10 @@
 						this.v1 = ''
 						this.v2 = ''
 						this.content = ''
-						this.$router.push('/article_list')
+						this.$store.dispatch('delSingleTag','/add_article').then( () => {
+							this.$router.push('/article_list')
+						})
+						
 						
 					}
 				}).catch( () => {

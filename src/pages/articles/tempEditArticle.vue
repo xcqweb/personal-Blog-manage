@@ -12,7 +12,7 @@
 		</el-select>
 		
 		<span style="font-size: 14px;margin: 0 10px 0 10px;">标题 :</span>
-		<el-input v-model="v2" style='width: 200px;margin-right: 10px;' size='mini'></el-input>
+		<el-input v-model="v2" style='width: 200px;margin-right: 10px;' size='mini' placeholder="请输入标题"></el-input>
 		
 		<quill-editor
 			class='edit'
@@ -21,7 +21,7 @@
             >
   		</quill-editor>
   		
-  		<el-button type="primary" style='margin-top: 20px;width: 100%;' @click='save'>保存</el-button>
+  		<el-button type="primary" style='margin: -60px auto;width: 86%;position: absolute;' @click='save'>保存</el-button>
 	</div>
 </template>
 
@@ -75,7 +75,7 @@
 				}
 				this.loading = true
 				this.$axios.post('api/admin/saveTem.html',params).then( (res) => {
-					if(res.data.status==200){
+					if(res.status==200){
 						this.loading = false
 						this.$notify({
 				          message: '恭喜你，文章保存成功!',

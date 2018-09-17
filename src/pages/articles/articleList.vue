@@ -98,6 +98,7 @@
 		          type='primary'
 		          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 		        <el-button
+		          v-show = '!ids'
 		          size="mini"
 		          type="danger"
 		          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -111,7 +112,7 @@
 	      @current-change="handleCurrentChange"
 	      :current-page="currentPage"
 	      layout="total, prev, pager, next, jumper"
-	      :total="pageSzie*10">
+	      :total="total">
 	    </el-pagination>
 		
 	</div>
@@ -125,6 +126,7 @@
 				tableData:[],
 				currentPage:1,
 				pageSzie:0,
+				total:0,
 				loading:true,
 				v1:'全部',
 				v2:'',
@@ -170,7 +172,7 @@
 						this.loading = false
 						let len = res.data.length-1
 						this.tableData = res.data
-						this.pageSzie = res.data[len]
+						this.total = res.data[len]
 						if(this.tableData.length){
 							this.tableData.pop()
 						}
@@ -183,7 +185,8 @@
 					pagesize:10,
 					page:1,
 					keyword:this.v2,
-					classify:this.v1
+					classify:this.v1,
+					type:1
 				}
 				this.getData(params)
 			},
@@ -203,9 +206,9 @@
 				let params = {
 					ids:this.ids
 				}
-				this.delete(params)
+				this.del(params)
 			},
-			delete(params){
+			del(params){
 				this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
@@ -234,7 +237,7 @@
 		          	ids:item._id
 		          }
 				
-				this.delete(params)
+				this.del(params)
 			},
 			handleCurrentChange(val){
 				this.loading = true

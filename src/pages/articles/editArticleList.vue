@@ -1,5 +1,5 @@
 <template>
-		<div class="articleList">
+		<div class="articleList" v-loading='loading'>
 			<!--搜索-->
 			<div class="search">
 				<span style="font-size: 14px;margin-right: 10px;">类别 :</span>
@@ -24,6 +24,13 @@
 		          </el-button>
 			</div>
 			
+			<p v-show="ids"  style="width: 96%;margin: auto;">
+				 <el-button
+		          size="mini"
+		          type="danger"
+		          @click="delMore">删除多项</el-button>
+			</p>
+			
 			<!--表格-->
 	  		<el-table
 		    ref="multipleTable"
@@ -33,7 +40,7 @@
 		    border
 		    stripe
 		    show-overflow-tooltip
-		    v-loading='loading'
+		    @selection-change="handleSelectionChange"
 		    >
 		    <el-table-column
 		      type="selection"
@@ -82,16 +89,22 @@
 		      >
 		    </el-table-column>
 		    
-		    <el-table-column label="操作" width='160'>
+		    <el-table-column label="操作" width='260'>
 		      <template slot-scope="scope">
 		        <el-button
 		          size="mini"
 		          type='primary'
 		          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 		        <el-button
+		          v-show = '!ids'
 		          size="mini"
 		          type="danger"
 		          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+		          
+		          <el-button
+		          size="mini"
+		          type='primary'
+		          @click="public(scope.$index, scope.row)">发布</el-button>
 		      </template>
 		    </el-table-column>
 		</el-table>
@@ -102,19 +115,22 @@
 	      @current-change="handleCurrentChange"
 	      :current-page="currentPage"
 	      layout="total, prev, pager, next, jumper"
-	      :total="pageSzie">
+	      :total="total">
 	    </el-pagination>
 		
 	</div>
 </template>
 
 <script>
+	import {debounce} from 'lodash'
 	export default{
 		name:'articleList',
 		data(){
 			return{
 				tableData:[],
+				ids:'',
 				currentPage:1,
+				total:0,
 				pageSzie:0,
 				loading:true,
 				v1:'全部',
@@ -160,7 +176,7 @@
 						this.loading = false
 						let len = res.data.length-1
 						this.tableData = res.data
-						this.pageSzie = len<10?res.data[len]:res.data[len]*10
+						this.total = res.data[len]
 						if(this.tableData.length){
 							this.tableData.pop()
 						}
@@ -173,7 +189,8 @@
 					pagesize:10,
 					page:1,
 					keyword:this.v2,
-					classify:this.v1
+					classify:this.v1,
+					type:1
 				}
 				this.getData(params)
 			},
@@ -181,8 +198,83 @@
 			handleEdit(index,item){
 				this.$router.push({path:'/edit_article',query:{id:item._id,tem:true}})
 			},
+			handleSelectionChange(val){
+				let arr = []
+				for(let v of val){
+					arr.push(v._id)
+				}
+				this.ids = arr.join(',')
+			},
+			delMore(){
+				let params = {
+					ids:this.ids
+				}
+				this.del(params)
+			},
 			handleDelete(index,item){
-				
+				let params = {
+					ids:item._id
+				}
+				this.del(params)
+			},
+			del(params){
+				this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+		          confirmButtonText: '确定',
+		          cancelButtonText: '取消',
+		          type: 'warning'
+		        }).then( () => {
+		        	this.$axios.post('api/admin/temdelete.html',params).then( (res) => {
+						if(res.status==200){
+							this.$notify({
+					          message: '删除成功!',
+					          type: 'success'
+					        })
+							this.search()
+						}
+					})
+		        }).catch( () => {
+		        	this.$message({
+			            type: 'info',
+			            message: '已取消删除'
+			          });  
+		        })
+			},
+			public : debounce(function(index,item){
+				this.loading = true
+				let params = {
+					id:item._id,
+					type:1
+				}
+				this.$axios.get('api/admin/notifytemedit.html',{params:params}).then( (res) => {
+					if(res.status==200){
+						this.saveTem(res.data)
+					}
+					
+				})
+			},1000),
+			
+			saveTem(data){
+				let params = {
+					title : data.title,
+					imgUrl : data.imgUrl,
+					author : data.author,
+					content : data.content,
+					classify : data.classify,
+					type:1
+				}
+				this.$axios.post('api/admin/save_add.html',params).then( (res) => {
+					if(res.data.status==200){
+						this.loading = false
+						this.$notify({
+				          message: '恭喜你，文章发布成功!',
+				          type: 'success'
+				        })
+						
+					    this.$router.push('/article_list')
+					}
+				}).catch( () => {
+					this.loading = false
+				})
 			},
 			handleCurrentChange(val){
 				this.loading = true
