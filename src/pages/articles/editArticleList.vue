@@ -182,6 +182,12 @@
 						}
 						
 					}
+				}).catch( () => {
+					this.loading = false
+					this.$message({
+			          message: '网络出错啦!',
+			          type: 'error'
+			        })
 				})
 			},
 			search(){
@@ -231,6 +237,12 @@
 					        })
 							this.search()
 						}
+					}).catch( () => {
+						this.loading = false
+						this.$message({
+				          message: '出错啦!',
+				          type: 'error'
+				        })
 					})
 		        }).catch( () => {
 		        	this.$message({
@@ -249,7 +261,6 @@
 					if(res.status==200){
 						this.saveTem(res.data)
 					}
-					
 				})
 			},1000),
 			
@@ -274,6 +285,10 @@
 					}
 				}).catch( () => {
 					this.loading = false
+					this.$message({
+			          message: '出错啦!',
+			          type: 'error'
+			        })
 				})
 			},
 			handleCurrentChange(val){

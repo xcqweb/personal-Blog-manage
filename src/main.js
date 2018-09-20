@@ -8,7 +8,7 @@ import 'polyfill'
 import 'babel-polyfill'
 import Element,{ Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import axios from 'axios'
+import instance from './http'
 import QuillEditor from 'vue-quill-editor'
 
 // require styles
@@ -23,7 +23,7 @@ Vue.use(QuillEditor, /* { default global options } */)
 Vue.config.productionTip = false
 Vue.use(Element)
 
-Vue.prototype.$axios = axios
+Vue.prototype.$axios = instance
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -103,12 +103,14 @@
 		height: 100vh;
 		position: relative;
 		width: 200px;
+		transition: all 0.5s ease-out;
 		.el-menu{
 			border: none;
 		}
 	}
 	
 	.close{
-			width: auto !important;
+			width: 64px !important;
+			transition: all 0.5s ease-in-out;
 		}
 </style>

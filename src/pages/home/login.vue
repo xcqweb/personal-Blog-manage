@@ -9,7 +9,7 @@
 			    <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
 			  </el-form-item>
 			  <el-form-item>
-			    <el-button type="primary" @click="submitForm('ruleForm')" style='width: 100%;'>登录</el-button>
+			    <el-button type="primary" @click="submitForm('ruleForm')" style='width: 100%;' :loading='loading'>登录</el-button>
 			  </el-form-item>
 			</el-form>
 		</div>
@@ -17,11 +17,13 @@
 </template>
 
 <script>
+	import axios from 'axios'
 	export default{
 		name:'login',
 		data(){
 			
 			return{
+				loading:false,
 				ruleForm: {
 		          password: '',
 		          username: ''
@@ -38,15 +40,19 @@
 		},
 		methods:{
 			submitForm(formName){
+				
 				this.$refs[formName].validate((valid) => {
 		          if (valid) {
+		          	this.loading = true
 		          	let parmas = {
 		          		username:this.ruleForm.username,
 		          		password:this.ruleForm.password,
 		          		type:1
 		          	}
-		             this.$axios.post('api/admin/login_p.html',parmas).then( (res) => {
+		             axios.post('api/admin/login_p.html',parmas).then( (res) => {
 		             	if(res.status==200){
+		             		this.loading = false
+		             		this.router.push('/')
 		             		console.log(res)
 		             	}
 		             })
@@ -74,7 +80,7 @@
 			margin: 20vh auto;
 			background-color: #fff;
 			border-radius: 10px;
-			padding: 100px 80px 100px 40px;
+			padding: 100px 80px 100px 20px;
 		}
 	}
 </style>

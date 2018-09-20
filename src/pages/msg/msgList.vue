@@ -113,6 +113,12 @@
 					        })
 							this.getData()
 						}
+					}).catch( () => {
+						this.loading = false
+						this.$message({
+				          message: '出错啦!',
+				          type: 'error'
+				        })
 					})
 		        }).catch(() => {
 		          this.$message({
@@ -158,8 +164,13 @@
 						if(this.tableData.length){
 							this.tableData.pop()
 						}
-						
 					}
+				}).catch( () => {
+					this.loading = false
+					this.$message({
+			          message: '出错啦!',
+			          type: 'error'
+			        })
 				})
 			},
 			

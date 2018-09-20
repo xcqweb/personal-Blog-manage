@@ -88,11 +88,13 @@
 						this.$store.dispatch('delSingleTag','/add_article').then( () => {
 							this.$router.push('/article_list')
 						})
-						
-						
 					}
 				}).catch( () => {
 					this.loading = false
+					this.$message({
+			          message: '出错啦!',
+			          type: 'error'
+			        })
 				})
 			},1000)
 		}

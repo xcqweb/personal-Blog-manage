@@ -89,6 +89,10 @@
 					}
 				}).catch( () => {
 					this.loading = false
+					this.$message({
+			          message: '出错啦!',
+			          type: 'error'
+			        })
 				})
 			},1000)
 				
