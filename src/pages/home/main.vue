@@ -26,7 +26,7 @@
 			tags,
 			appMain,
 			navbar
-		}
+		},
 	}
 </script>
 

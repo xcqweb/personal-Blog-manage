@@ -49,12 +49,18 @@
 		          		password:this.ruleForm.password,
 		          		type:1
 		          	}
-		             axios.post('api/admin/login_p.html',parmas).then( (res) => {
-		             	if(res.status==200){
-		             		this.loading = false
-		             		this.router.push('/')
-		             		console.log(res)
+		             axios.post(this.API_URL+'/admin/login_p.html',parmas).then( (res) => {
+		             	console.log(res.data)
+		             	this.loading = false
+		             	if(res.data.status==200){
+		             		sessionStorage.token = res.data.token;
+		             		this.$message.success('登录成功!');
+		             		this.$router.push('/')
+		             	}else if(res.data.status==126001){
+		             		this.$message.error('用户名或密码错误!');
 		             	}
+		             }).catch( () => {
+		             	this.loading = false
 		             })
 		          }
 		        })

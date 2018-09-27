@@ -25,7 +25,7 @@
 					id:this.$route.query.id,
 					type:1
 				}
-				this.$axios.get('api/admin/edit_d.html',{params:params}).then( (res) => {
+				this.$axios.get(this.API_URL+'/admin/edit_d.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.content = res.data.content
 					}
@@ -38,14 +38,14 @@
 				this.loading = true
 				let url,params;
 				if(this.$route.query.tem){
-					url = 'api/admin/save_diaryedit.html'
+					url = this.API_URL+'/admin/save_diaryedit.html'
 					params = {
 						editid:this.$route.query.id,
 						content:this.content,
 						type:1
 					}
 				}else{
-					url = 'api/admin/add_diary.html'
+					url = this.API_URL+'/admin/add_diary.html'
 					params = {
 						content:this.content,
 						type:1

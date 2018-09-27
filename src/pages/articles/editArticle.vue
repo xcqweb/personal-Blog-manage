@@ -73,7 +73,7 @@
 				type:1
 			}
 			this.loading = true
-			let url = this.$route.query.tem?'api/admin/temedit.html':'api/admin/vedit.html'
+			let url = this.$route.query.tem?this.API_URL+'/admin/temedit.html':this.API_URL+'/admin/vedit.html'
 			this.$axios.get(url,{params:params}).then( (res) => {
 				if(res.status==200){
 					this.loading = false
@@ -98,7 +98,7 @@
 					type:1
 				}
 				this.loading = true
-				let url = this.$route.query.tem?'api/admin/temsave_edit.html':'api/admin/save_edit.html'
+				let url = this.$route.query.tem?this.API_URL+'/admin/temsave_edit.html':this.API_URL+'/admin/save_edit.html'
 				this.$axios.post(url,params).then( (res) => {
 					if(res.data.status==200){
 						this.loading = false

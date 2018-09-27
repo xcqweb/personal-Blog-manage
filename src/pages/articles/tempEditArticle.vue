@@ -74,7 +74,7 @@
 					type:1
 				}
 				this.loading = true
-				this.$axios.post('api/admin/saveTem.html',params).then( (res) => {
+				this.$axios.post(this.API_URL+'/admin/saveTem.html',params).then( (res) => {
 					if(res.status==200){
 						this.loading = false
 						this.$notify({

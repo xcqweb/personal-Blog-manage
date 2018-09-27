@@ -19,11 +19,19 @@ import 'quill/dist/quill.bubble.css'
 Vue.use(QuillEditor, /* { default global options } */)
 
 
-
 Vue.config.productionTip = false
 Vue.use(Element)
 
 Vue.prototype.$axios = instance
+
+
+Vue.mixin({
+	data(){
+		return{
+			API_URL:'http://120.78.64.121'
+		}
+	}
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

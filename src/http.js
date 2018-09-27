@@ -5,8 +5,9 @@ let instance = axios.create({
 	baseURL: '', // api的base_url
     timeout: 5000 // request timeout
 })
-let token = localStorage.getItem('token')
+
 instance.interceptors.request.use( (config) => {
+	let token = sessionStorage.getItem('token')
 	if(config.method === 'post' || config.method === 'put'){
         let _data = ''
         for(let it in config.data){
@@ -17,8 +18,6 @@ instance.interceptors.request.use( (config) => {
 	
 	if(token){
 		config.headers['Authorization'] = token;
-	}else{
-		router.push('login')
 	}
 	return config
 },error => {
@@ -27,7 +26,13 @@ instance.interceptors.request.use( (config) => {
 
 
 instance.interceptors.response.use( (response) => {
-	return response
+	if(response.data.status==401){
+		router.push('login')
+		return
+	}else{
+		return response
+	}
+	
 }, error => {
 	return Promise.reject(error)
 })

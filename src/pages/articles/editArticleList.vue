@@ -171,7 +171,7 @@
 		methods:{
 			getData(params){
 				this.loading = true
-				this.$axios.get('api/admin/temlist.html',{params:params}).then( (res) => {
+				this.$axios.get(this.API_URL+'/admin/temlist.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.loading = false
 						let len = res.data.length-1
@@ -229,7 +229,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then( () => {
-		        	this.$axios.post('api/admin/temdelete.html',params).then( (res) => {
+		        	this.$axios.post(this.API_URL+'/admin/temdelete.html',params).then( (res) => {
 						if(res.status==200){
 							this.$notify({
 					          message: '删除成功!',
@@ -257,7 +257,7 @@
 					id:item._id,
 					type:1
 				}
-				this.$axios.get('api/admin/notifytemedit.html',{params:params}).then( (res) => {
+				this.$axios.get(this.API_URL+'/admin/notifytemedit.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.saveTem(res.data)
 					}
@@ -273,7 +273,7 @@
 					classify : data.classify,
 					type:1
 				}
-				this.$axios.post('api/admin/save_add.html',params).then( (res) => {
+				this.$axios.post(this.API_URL+'/admin/save_add.html',params).then( (res) => {
 					if(res.data.status==200){
 						this.loading = false
 						this.$notify({

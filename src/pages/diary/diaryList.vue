@@ -102,7 +102,7 @@
 		          type: 'warning'
 		        }).then(() => {
 		          
-					this.$axios.post('api/admin//delete_d.html',params).then( (res) => {
+					this.$axios.post(this.API_URL+'/admin//delete_d.html',params).then( (res) => {
 						if(res.status==200){
 							this.$notify({
 					          message: '日记删除成功!',
@@ -152,7 +152,7 @@
 				}
 				
 				this.loading = true
-				this.$axios.get('api/admin/diarylist_d.html',{params:params}).then( (res) => {
+				this.$axios.get(this.API_URL+'/admin/diarylist_d.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.loading = false
 						let len = res.data.length-1
