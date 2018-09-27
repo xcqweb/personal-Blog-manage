@@ -257,7 +257,8 @@
 					pagesize:10,
 					page:val,
 					keyword:this.v2,
-					classify:this.v1
+					classify:this.v1,
+					type:1
 				}
 				this.getData(params)
 			}
