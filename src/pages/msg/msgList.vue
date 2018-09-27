@@ -105,7 +105,7 @@
 		          type: 'warning'
 		        }).then(() => {
 		          
-					this.$axios.post('api/admin/delete_m.html',params).then( (res) => {
+					this.$axios.post(this.API_URL+'/admin/delete_m.html',params).then( (res) => {
 						if(res.status==200){
 							this.$notify({
 					          message: '留言删除成功!',
@@ -155,7 +155,7 @@
 				}
 				
 				this.loading = true
-				this.$axios.get('api/admin/msglist_m.html',{params:params}).then( (res) => {
+				this.$axios.get(this.API_URL+'/admin/msglist_m.html',{params:params}).then( (res) => {
 					if(res.status==200){
 						this.loading = false
 						let len = res.data.length-1
