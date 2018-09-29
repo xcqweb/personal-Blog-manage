@@ -21,6 +21,12 @@ export default {
 .ql-container{
 	height: 72vh !important;
 }
+.el-form-item__label{
+		color: #fff !important;
+	}
+	.el-carousel__container{
+  	height: 72vh;
+  }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -48,6 +54,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+}
+a{
+	text-decoration: none;
 }
 ol, ul {
 	list-style: none;

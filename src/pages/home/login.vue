@@ -1,5 +1,5 @@
 <template>
-	<div class="login">
+	<div class="login" id="particles-js">
 		<div class="con">
 			<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="用户名" prop="username">
@@ -17,12 +17,15 @@
 </template>
 
 <script>
+	import '../../../static/particles/particles.min.js'
+	particlesJS.load('particles-js','../../../static/particles/particles.json', function() {});
 	import axios from 'axios'
 	export default{
 		name:'login',
 		data(){
 			
 			return{
+				particlesJS: particlesJS,
 				loading:false,
 				ruleForm: {
 		          password: '',
@@ -38,7 +41,18 @@
 		        }
 			}
 		},
+		beforeDestory(){
+			removeEventListener('keyup',this.keyupLogin,false)
+		},
+		mounted(){
+			addEventListener('keyup',this.keyupLogin,false)
+		},
 		methods:{
+			keyupLogin(e){
+				if(e.keyCode==13){
+					this.submitForm('ruleForm')
+				}
+			},
 			submitForm(formName){
 				
 				this.$refs[formName].validate((valid) => {
@@ -50,10 +64,10 @@
 		          		type:1
 		          	}
 		             axios.post(this.API_URL+'/admin/login_p.html',parmas).then( (res) => {
-		             	console.log(res.data)
 		             	this.loading = false
 		             	if(res.data.status==200){
 		             		sessionStorage.token = res.data.token;
+		             		window.localStorage.setItem('user',JSON.stringify(res.data.user[0]));
 		             		this.$message.success('登录成功!');
 		             		this.$router.push('/')
 		             	}else if(res.data.status==126001){
@@ -75,7 +89,7 @@
 		width: 100vw;
 		height: 100vh;
 		position: fixed;
-		background: #545c64;
+		background: url(../../assets/index/bg.jpg);
 		.con{
 			width: 30vw;
 			height: 20vh;
@@ -84,7 +98,8 @@
 			left: 0;
 			right: 0;
 			margin: 20vh auto;
-			background-color: #fff;
+			position: absolute;
+			background-color: rgba(100,100,100,0.6);
 			border-radius: 10px;
 			padding: 100px 80px 100px 20px;
 		}
@@ -92,9 +107,6 @@
 	}
 	.el-input__inner{
 		background-color: #000 !important;
-	}
-	.el-form-item__label{
-		color: #fff !important;
 	}
 	
 	.el-icon-view{

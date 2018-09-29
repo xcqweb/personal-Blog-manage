@@ -64,13 +64,12 @@
 		  
 		  
 		  <!--管员管理管理-->
-		  <el-submenu index="5">
+		  <el-submenu index="5" v-if='user.role=="超级管理员"'>
 		    <template slot="title">
 		      <i class="el-icon-setting" style="color: #ccc;"></i>
 		      <span slot="title">管理员管理</span>
 		    </template>
 		    <el-menu-item-group>
-		      <el-menu-item index="add_manage">新增管理员</el-menu-item>
 		      <el-menu-item index="manage_list">管理员列表</el-menu-item>
 		      <el-menu-item index="log_list">日志列表</el-menu-item>
 		    </el-menu-item-group>

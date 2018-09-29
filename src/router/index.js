@@ -97,12 +97,6 @@ Vue.use(Router)
       		meta:{title:'链接列表',requiresAuth:true},
       	},
       	{
-      		path:'add_manage',
-      		name:'add_manage',
-      		component: () => import('@/pages/manage/addManage'),
-      		meta:{title:'新增管理员',requiresAuth:true},
-      	},
-      	{
       		path:'manage_list',
       		name:'manage_list',
       		component: () => import('@/pages/manage/manageList'),

@@ -28,7 +28,8 @@ Vue.prototype.$axios = instance
 Vue.mixin({
 	data(){
 		return{
-			API_URL:'http://120.78.64.121'
+			API_URL:'http://120.78.64.121',
+			user:JSON.parse(localStorage.getItem('user'))?JSON.parse(localStorage.getItem('user')):{}
 		}
 	}
 })

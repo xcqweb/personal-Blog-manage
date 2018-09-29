@@ -3,7 +3,7 @@ import router from './router'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 let instance = axios.create({
 	baseURL: '', // api的base_url
-    timeout: 5000 // request timeout
+    timeout: 500000 // request timeout
 })
 
 instance.interceptors.request.use( (config) => {
