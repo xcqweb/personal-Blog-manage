@@ -75,7 +75,7 @@
 		width: 100vw;
 		height: 100vh;
 		position: fixed;
-		background: #eee;
+		background: #545c64;
 		.con{
 			width: 30vw;
 			height: 20vh;
@@ -88,5 +88,16 @@
 			border-radius: 10px;
 			padding: 100px 80px 100px 20px;
 		}
+		
+	}
+	.el-input__inner{
+		background-color: #000 !important;
+	}
+	.el-form-item__label{
+		color: #fff !important;
+	}
+	
+	.el-icon-view{
+		color: #000;
 	}
 </style>
