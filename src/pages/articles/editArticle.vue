@@ -26,7 +26,6 @@
 </template>
 
 <script>
-	import {debounce} from 'lodash'
 	export default{
 		name:'addArticle',
 		data(){
@@ -87,7 +86,7 @@
 		},
 		
 		methods:{
-			save : debounce(function(){
+			save : _.debounce(function(){
 				let params = {
 					title : this.v2,
 					imgUrl : this.reData.imgUrl,

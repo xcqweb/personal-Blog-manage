@@ -122,7 +122,6 @@
 </template>
 
 <script>
-	import {debounce} from 'lodash'
 	export default{
 		name:'articleList',
 		data(){
@@ -251,7 +250,7 @@
 			          });  
 		        })
 			},
-			public : debounce(function(index,item){
+			public : _.debounce(function(index,item){
 				this.loading = true
 				let params = {
 					id:item._id,
