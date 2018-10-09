@@ -1,4 +1,3 @@
-import axios from 'axios'
 import router from './router'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 let instance = axios.create({

@@ -26,6 +26,7 @@ export default {
   computed: {
   },
   created() {
+  	console.dir(_)
   }
 }
 </script>
