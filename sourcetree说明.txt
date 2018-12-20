@@ -1,0 +1,33 @@
+1. 找到目录： C:\Users\用户\AppData\Local\Atlassian\SourceTree
+
+
+2. 新建accounts.json文件里面输入
+
+
+    [  
+      {  
+        "$id": "1",  
+        "$type": "SourceTree.Api.Host.Identity.Model.IdentityAccount, SourceTree.Api.Host.Identity",  
+        "Authenticate": true,  
+        "HostInstance": {  
+          "$id": "2",  
+          "$type": "SourceTree.Host.Atlassianaccount.AtlassianAccountInstance, SourceTree.Host.AtlassianAccount",  
+          "Host": {  
+            "$id": "3",  
+            "$type": "SourceTree.Host.Atlassianaccount.AtlassianAccountHost, SourceTree.Host.AtlassianAccount",  
+            "Id": "atlassian account"  
+          },  
+          "BaseUrl": "https://id.atlassian.com/"  
+        },  
+        "Credentials": {  
+          "$id": "4",  
+          "$type": "SourceTree.Model.BasicAuthCredentials, SourceTree.Api.Account",  
+          "Username": "",  
+          "Email": null  
+        },  
+        "IsDefault": false  
+      }  
+    ]  
+
+
+3. 重新打开，就不会提示注册了！
