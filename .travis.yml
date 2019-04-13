@@ -1,0 +1,17 @@
+
+language:node_js
+
+git:
+    depth:1
+    
+branches:
+  only:
+  - master
+  - dev
+  
+  
+  
+ script:
+  - yarn install
+  - yarn run lint
+  - yarn run build
