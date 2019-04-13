@@ -25,7 +25,7 @@ Vue.prototype.$axios = instance
 Vue.mixin({
 	data(){
 		return{
-			API_URL:'http://120.78.64.121',
+			API_URL:process.env.NODE_ENV === 'production'?'http://120.78.64.121':'/api',
 			user:JSON.parse(localStorage.getItem('user'))?JSON.parse(localStorage.getItem('user')):{}
 		}
 	}
