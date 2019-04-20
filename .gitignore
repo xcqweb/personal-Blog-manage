@@ -16,3 +16,5 @@ yarn-error.log*
 [credential]
 
     helper = store
+/node_modules.zip
+/node_modules.zip
